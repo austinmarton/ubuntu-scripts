@@ -21,9 +21,10 @@ for (( i=1; i<=$NUM; i++)); do
   NAME=$(xmllint --xpath 'string(//monitors/configuration['1']/output['$i']/@name)' $HOME/.config/monitors.xml 2>NULL)
   POS_X=$(xmllint --xpath '//monitors/configuration['1']/output['$i']/x/text()' $HOME/.config/monitors.xml 2>NULL)
   POS_Y=$(xmllint --xpath '//monitors/configuration['1']/output['$i']/y/text()' $HOME/.config/monitors.xml 2>NULL)
+  ROTATE=$(xmllint --xpath '//monitors/configuration['1']/output['$i']/rotation/text()' $HOME/.config/monitors.xml 2>NULL)
 
   # if position is defined for current monitor, add its position to command line parameters
-  [ -n "$POS_X" ] && PARAM_ARR=("${PARAM_ARR[@]}" "--output" "$NAME" "--pos" "${POS_X}x${POS_Y}")
+  [ -n "$POS_X" ] && PARAM_ARR=("${PARAM_ARR[@]}" "--output" "$NAME" "--pos" "${POS_X}x${POS_Y}" "--rotate" "${ROTATE}")
 done
 
 # wait for 5 seconds (for X to finish initialisation)
